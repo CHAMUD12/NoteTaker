@@ -32,4 +32,11 @@ public class NoteController {
         System.out.println(noteId);
         return null;
     }
+
+    //Todo: UPDATE a note
+    @PatchMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public void updateNote(@PathVariable ("noteId") String noteId, @RequestBody NoteDTO note) {
+        System.out.println(noteId);
+        System.out.println(note+ " Updated");
+    }
 }
