@@ -1,23 +1,29 @@
 package org.example.notetaker.controller;
 
-import org.example.notetaker.dto.Note;
+import org.example.notetaker.dto.NoteDTO;
 import org.example.notetaker.util.AppUtil;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/notes")
 public class NoteController {
     //Todo: SAVE a note
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> saveNote(@RequestBody Note note){
+    public ResponseEntity<String> saveNote(@RequestBody NoteDTO noteDTO){
         //Todo: Handle with BO
-        note.setId(AppUtil.genarateid());
-        System.out.println(note);
+        noteDTO.setId(AppUtil.genarateid());
+        System.out.println(noteDTO);
         return ResponseEntity.ok("Note saved successfully");    //
     }
+
+    //Todo: GetAll a note
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<NoteDTO> getAllNotes(){
+        return null;
+    }
+
 }
