@@ -39,4 +39,10 @@ public class NoteController {
         System.out.println(noteId);
         System.out.println(note+ " Updated");
     }
+
+    //Todo: DELETE a note
+    @DeleteMapping
+    public void deleteNote(@PathVariable ("noteId") String noteId) {
+        System.out.println(noteId + " Deleted");
+    }
 }
