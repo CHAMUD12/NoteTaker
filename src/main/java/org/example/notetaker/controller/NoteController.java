@@ -26,4 +26,10 @@ public class NoteController {
         return null;
     }
 
+    //Todo: SEARCH a note
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public NoteDTO getNote(@PathVariable ("noteId") String noteId)  {
+        System.out.println(noteId);
+        return null;
+    }
 }
