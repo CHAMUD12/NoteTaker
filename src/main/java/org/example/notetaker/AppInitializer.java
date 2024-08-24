@@ -8,7 +8,6 @@ import org.example.notetaker.config.WebAppConfig;
 import org.example.notetaker.config.WebAppRootConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-@WebServlet(name = "helloServlet", value = "/hello-servlet")
 public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
     protected Class<?>[] getRootConfigClasses() {
