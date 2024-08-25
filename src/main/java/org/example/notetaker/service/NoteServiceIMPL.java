@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
+
 @Service
 public final class NoteServiceIMPL implements NoteService {
     List<NoteDTO> saveNoteTmp = new ArrayList<>();
@@ -24,8 +26,16 @@ public final class NoteServiceIMPL implements NoteService {
     }
 
     @Override
-    public boolean updateNote(String noteId, NoteDTO noteDTO) {
-        return false;
+    public void updateNote(String noteId, NoteDTO incomeNoteDTO) {
+        ListIterator<NoteDTO> updatedList = saveNoteTmp.listIterator();
+        while (updatedList.hasNext()) {
+            NoteDTO noteDTO = updatedList.next();
+            if (noteId.equals(noteDTO.getNoteId())) {
+                incomeNoteDTO.setNoteId(noteDTO.getNoteId());
+                updatedList.set(incomeNoteDTO);
+                break;
+            }
+        }
     }
 
     @Override
@@ -45,6 +55,7 @@ public final class NoteServiceIMPL implements NoteService {
 
     @Override
     public List<NoteDTO> getAllNotes() {
+        System.out.println(saveNoteTmp.toString());
         return saveNoteTmp;
     }
 }
