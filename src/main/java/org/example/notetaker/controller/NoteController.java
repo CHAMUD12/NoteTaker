@@ -1,9 +1,8 @@
 package org.example.notetaker.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.notetaker.bo.NoteBO;
+import org.example.notetaker.service.NoteService;
 import org.example.notetaker.dto.NoteDTO;
-import org.example.notetaker.util.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,34 +15,28 @@ import java.util.List;
 @RequiredArgsConstructor
 public class NoteController {
     @Autowired
-    private final NoteBO noteBO;
+    private final NoteService noteService;
 
     //Todo: SAVE a note
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)   // http://localhost:8080/NoteTaker_war_exploded/api/v1/notes
     public ResponseEntity<String> createNote(@RequestBody NoteDTO note){
         //Todo: Handle with BO
-        var saveData = noteBO.saveNote(note);
+        var saveData = noteService.saveNote(note);
         return ResponseEntity.ok(saveData);
     }
 
     //Todo: GetAll a note
     @GetMapping(value = "allnotes", produces = MediaType.APPLICATION_JSON_VALUE)    // http://localhost:8080/NoteTaker_war_exploded/api/v1/notes/allnotes
     public List<NoteDTO> getAllNotes(){
-        System.out.println("Get all notes");
-        return null;
+        return noteService.getAllNotes();
     }
 
     //Todo: SEARCH a note
-    @GetMapping(value = "/{noteId}", produces = MediaType.APPLICATION_JSON_VALUE)   // http://localhost:8080/NoteTaker_war_exploded/api/v1/notes/4f8a0a67-2ebc-41b2-9de6-4e9bcdba65bb
+    @GetMapping(value = "/{noteId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    // http://localhost:8080/NoteTaker_war_exploded/api/v1/notes/4f8a0a67-2ebc-41b2-9de6-4e9bcdba65bb
+    // http://localhost:8080/NoteTaker_war_exploded/api/v1/notes/NOTE 4f8a0a67-2ebc-41b2-9de6-4e9bcdba65bb
     public NoteDTO getNote(@PathVariable ("noteId") String noteId)  {
-        System.out.println(noteId);
-        return new NoteDTO(
-                "NOTE 4f8a0a67-2ebc-41b2-9de6-4e9bcdba65bb",
-                "REST services",
-                "Explain the REST",
-                "P1",
-                "20240818"
-        );
+        return noteService.getSelectedNote(noteId);
     }
 
     //Todo: UPDATE a note
