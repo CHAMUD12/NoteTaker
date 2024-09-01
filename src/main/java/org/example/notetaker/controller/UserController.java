@@ -3,6 +3,7 @@ package org.example.notetaker.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.notetaker.dto.UserDTO;
 import org.example.notetaker.service.UserService;
+import org.example.notetaker.util.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -31,6 +32,15 @@ public class UserController {
             @RequestPart("profilePic") String profilePic) {
 
         // handle profile picture
+        String base64ProfilePic = AppUtil.toBase64ProfilePic(profilePic);
+
+        // Build the user object
+        var buildUserDTO = new UserDTO();
+        buildUserDTO.setFirstName(firstName);
+        buildUserDTO.setLastName(lastName);
+        buildUserDTO.setEmail(email);
+        buildUserDTO.setPassword(password);
+        buildUserDTO.setProfilePic(base64ProfilePic);
     }
 }
 
