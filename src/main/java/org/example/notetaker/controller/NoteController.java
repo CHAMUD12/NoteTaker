@@ -18,6 +18,12 @@ public class NoteController {
     @Autowired
     private final NoteService noteService;
 
+    @GetMapping("health")
+    public String healthCheck(){
+        http://localhost:8080/NoteTaker_war_exploded/api/v1/notes/health
+        return "Note Tacker is Running...";
+    }
+
     //Todo: SAVE a note
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)   // http://localhost:8080/NoteTaker_war_exploded/api/v1/notes
     public ResponseEntity<String> createNote(@RequestBody NoteDTO note){
