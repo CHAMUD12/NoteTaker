@@ -1,8 +1,9 @@
-package org.example.notetaker.service;
+package org.example.notetaker.service.impl;
 
 import org.example.notetaker.dao.NoteDAO;
 import org.example.notetaker.dto.NoteDTO;
 import org.example.notetaker.entity.NoteEntity;
+import org.example.notetaker.service.NoteService;
 import org.example.notetaker.util.AppUtil;
 import org.example.notetaker.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
