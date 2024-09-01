@@ -40,11 +40,13 @@ public class NoteServiceIMPL implements NoteService {
 
     @Override
     public NoteDTO getSelectedNote(String noteId) {
-        return null;
+        // http://localhost:8080/NoteTaker_war_exploded/api/v1/notes/NOTE-b38f55ef-e148-4e4b-8586-a3dcf4d012d3
+        return mapping.convertToDTO(noteDAO.getReferenceById(noteId));
     }
 
     @Override
     public List<NoteDTO> getAllNotes() {
+        // http://localhost:8080/NoteTaker_war_exploded/api/v1/notes/allnotes
 //        List<NoteEntity> getAllNotes = noteDAO.findAll();
 //        List<NoteDTO> noteDTOS = mapping.convertToDTO(getAllNotes);
 //        return noteDTOS;
