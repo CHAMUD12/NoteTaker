@@ -34,8 +34,14 @@ public class NoteServiceIMPL implements NoteService {
     }
 
     @Override
-    public void deleteNote(String noteId) {
-
+    public boolean deleteNote(String noteId) {
+        // http://localhost:8080/NoteTaker_war_exploded/api/v1/notes/NOTE-b38f55ef-e148-4e4b-8586-a3dcf4d012d3
+        if (noteDAO.existsById(noteId)){
+            noteDAO.deleteById(noteId);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

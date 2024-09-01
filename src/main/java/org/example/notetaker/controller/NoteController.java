@@ -51,12 +51,10 @@ public class NoteController {
     }
 
     //Todo: DELETE a note
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(value ="/{noteId}" )
     //  http://localhost:8080/NoteTaker_war_exploded/api/v1/notes/1990119
     //  http://localhost:8080/NoteTaker_war_exploded/api/v1/notes/NOTE 4f8a0a67-2ebc-41b2-9de6-4e9bcdba65bb
-    public void deleteNote(@PathVariable ("noteId") String noteId) {
-        noteService.deleteNote(noteId);
-        System.out.println(noteId + " Deleted");
+    public ResponseEntity<String> deleteNote(@PathVariable ("noteId") String noteId) {
+        return noteService.deleteNote(noteId) ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }
