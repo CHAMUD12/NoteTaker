@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -29,8 +30,18 @@ public class NoteServiceIMPL implements NoteService {
     }
 
     @Override
-    public void updateNote(String noteId, NoteDTO noteDTO) {
-
+    public boolean updateNote(String noteId, NoteDTO incomeNoteDTO) {
+        // http://localhost:8080/NoteTaker_war_exploded/api/v1/notes/NOTE-c67069d1-8e79-4d33-919a-f7a02820ac78
+        Optional<NoteEntity> tmpNoteEntity= noteDAO.findById(noteId);
+        if(!tmpNoteEntity.isPresent()){
+            return false;
+        }else {
+            tmpNoteEntity.get().setNoteDesc(incomeNoteDTO.getNoteDesc());
+            tmpNoteEntity.get().setNoteTitle(incomeNoteDTO.getNoteTitle());
+            tmpNoteEntity.get().setCreateDate(incomeNoteDTO.getCreateDate());
+            tmpNoteEntity.get().setPriorityLevel(incomeNoteDTO.getPriorityLevel());
+        }
+        return true;
     }
 
     @Override
