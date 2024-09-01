@@ -2,9 +2,13 @@ package org.example.notetaker.service.impl;
 
 import org.example.notetaker.dto.UserDTO;
 import org.example.notetaker.service.UserService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Service
+@Transactional
 public class UserServiceIMPL implements UserService {
 
     @Override

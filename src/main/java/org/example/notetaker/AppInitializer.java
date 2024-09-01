@@ -2,6 +2,8 @@ package org.example.notetaker;
 
 import java.io.*;
 
+import jakarta.servlet.MultipartConfigElement;
+import jakarta.servlet.ServletRegistration;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import org.example.notetaker.config.WebAppConfig;
@@ -22,5 +24,10 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
     @Override
     protected String[] getServletMappings() {
         return new String[]{"/"};
+    }
+
+    @Override
+    protected void customizeRegistration(ServletRegistration.Dynamic registration) {
+        registration.setMultipartConfig(new MultipartConfigElement("/tmp/"));
     }
 }
