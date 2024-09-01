@@ -15,13 +15,10 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-
 import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan(basePackages = "org.example.notetaker")
-@EnableWebMvc
 @EnableJpaRepositories(basePackages = "org.example.notetaker")
 @EnableTransactionManagement
 public class WebAppRootConfig {
