@@ -5,8 +5,10 @@ import org.example.notetaker.dto.UserDTO;
 import org.example.notetaker.service.UserService;
 import org.example.notetaker.util.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,7 +26,7 @@ public class UserController {
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public RequestEntity<String> saveUser(
+    public ResponseEntity<String> saveUser(
             @RequestPart("firstName") String firstName,
             @RequestPart("lastName") String lastName,
             @RequestPart("email") String email,
@@ -41,6 +43,9 @@ public class UserController {
         buildUserDTO.setEmail(email);
         buildUserDTO.setPassword(password);
         buildUserDTO.setProfilePic(base64ProfilePic);
+
+        // Send the user object to the service
+        return new ResponseEntity<>(userService.saveUser(buildUserDTO), HttpStatus.CREATED);
     }
 }
 
