@@ -61,12 +61,14 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable("id") String id){
-        boolean deleted = userService.deleteUser(id);
-        if(deleted){
-            return new ResponseEntity<>("User deleted successfully" ,HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>("User not found" ,HttpStatus.NOT_FOUND);
+    public ResponseEntity<Void> deleteUser(@PathVariable("id") String userId){
+        try {
+            userService.deleteUser(userId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (UserNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
