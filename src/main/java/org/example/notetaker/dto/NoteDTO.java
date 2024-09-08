@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class NoteDTO implements Serializable {
+public class NoteDTO implements SuperDTO {
     private String noteId;
     private String noteTitle;
     private String noteDesc;

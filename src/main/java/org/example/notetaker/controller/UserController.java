@@ -1,6 +1,7 @@
 package org.example.notetaker.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.notetaker.customObj.UserResponse;
 import org.example.notetaker.dto.NoteDTO;
 import org.example.notetaker.dto.UserDTO;
 import org.example.notetaker.exception.UserNotFoundException;
@@ -70,7 +71,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserDTO getUserById(@PathVariable("id") String userId){
+    public UserResponse getUserById(@PathVariable("id") String userId){
         return userService.getSelectedUser(userId);
     }
 

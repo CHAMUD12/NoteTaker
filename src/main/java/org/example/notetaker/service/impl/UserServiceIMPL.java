@@ -1,6 +1,8 @@
 package org.example.notetaker.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.example.notetaker.customObj.UserErrorResponse;
+import org.example.notetaker.customObj.UserResponse;
 import org.example.notetaker.dao.UserDAO;
 import org.example.notetaker.dto.UserDTO;
 import org.example.notetaker.entity.UserEntity;
@@ -64,9 +66,14 @@ public class UserServiceIMPL implements UserService {
     }
 
     @Override
-    public UserDTO getSelectedUser(String userId) {
-        UserEntity userEntityByUserId = userDAO.getUserEntitiesByUserId(userId);
-        return mapping.convertToUserDTO(userEntityByUserId);    }
+    public UserResponse getSelectedUser(String userId) {
+        if(userDAO.existsById(userId)){
+            UserEntity userEntityByUserId = userDAO.getUserEntitiesByUserId(userId);
+            return mapping.convertToUserDTO(userEntityByUserId);
+        }else {
+            return new UserErrorResponse(0, "User not found");
+        }
+    }
 
     @Override
     public List<UserDTO> getAllUsers() {
