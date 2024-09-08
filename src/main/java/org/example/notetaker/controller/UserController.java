@@ -11,6 +11,8 @@ import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
@@ -46,6 +48,16 @@ public class UserController {
 
         // Send the user object to the service
         return new ResponseEntity<>(userService.saveUser(buildUserDTO), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable("id") String id){
+        boolean deleted = userService.deleteUser(id);
+        if(deleted){
+            return new ResponseEntity<>("User deleted successfully" ,HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>("User not found" ,HttpStatus.NOT_FOUND);
+        }
     }
 }
 

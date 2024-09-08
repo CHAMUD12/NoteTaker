@@ -37,7 +37,13 @@ public class UserServiceIMPL implements UserService {
 
     @Override
     public boolean deleteUser(String userId) {
-        return false;
+        // http://localhost:8080/NoteTaker_war_exploded/api/v1/users/USER-825c1b6f-49fa-4db9-8db6-d8716c64d0bc
+        if (userDAO.existsById(userId)) {
+            userDAO.deleteById(userId);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
