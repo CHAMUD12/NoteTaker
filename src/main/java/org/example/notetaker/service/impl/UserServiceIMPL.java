@@ -3,6 +3,7 @@ package org.example.notetaker.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.example.notetaker.dao.UserDAO;
 import org.example.notetaker.dto.UserDTO;
+import org.example.notetaker.entity.UserEntity;
 import org.example.notetaker.service.UserService;
 import org.example.notetaker.util.AppUtil;
 import org.example.notetaker.util.Mapping;
@@ -48,8 +49,8 @@ public class UserServiceIMPL implements UserService {
 
     @Override
     public UserDTO getSelectedUser(String userId) {
-        return null;
-    }
+        UserEntity userEntityByUserId = userDAO.getUserEntitiesByUserId(userId);
+        return mapping.convertToUserDTO(userEntityByUserId);    }
 
     @Override
     public List<UserDTO> getAllUsers() {
