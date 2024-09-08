@@ -6,6 +6,7 @@ import org.example.notetaker.customObj.UserResponse;
 import org.example.notetaker.dao.UserDAO;
 import org.example.notetaker.dto.UserDTO;
 import org.example.notetaker.entity.UserEntity;
+import org.example.notetaker.exception.DataPersistFailedException;
 import org.example.notetaker.exception.UserNotFoundException;
 import org.example.notetaker.service.UserService;
 import org.example.notetaker.util.AppUtil;
@@ -29,13 +30,11 @@ public class UserServiceIMPL implements UserService {
     private final Mapping mapping;
 
     @Override
-    public String saveUser(UserDTO userDTO) {
+    public void saveUser(UserDTO userDTO) {
         userDTO.setUserId(AppUtil.createUserId());
         UserEntity savedUser = userDAO.save(mapping.convertToUserEntity(userDTO));
-        if(savedUser != null && savedUser.getUserId() != null ) {
-            return "User saved successfully";
-        }else {
-            return "Save failed";
+        if(savedUser == null && savedUser.getUserId() == null ) {
+            throw new DataPersistFailedException("Cannot data saved");
         }
     }
 
