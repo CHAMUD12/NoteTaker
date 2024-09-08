@@ -12,6 +12,8 @@ import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @RestController
@@ -66,5 +68,29 @@ public class UserController {
         return userService.getSelectedUser(userId);
     }
 
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<UserDTO> getAllUsers(){
+        return userService.getAllUsers();
+    }
+
+    @PatchMapping(value = "/{id}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> updateUser(
+            @PathVariable ("id") String id,
+            @RequestPart("updateFirstName") String updateFirstName,
+            @RequestPart ("updateLastName") String updateLastName,
+            @RequestPart ("updateEmail") String updateEmail,
+            @RequestPart ("updatePassword") String updatePassword,
+            @RequestPart ("updateProfilePic") String updateProfilePic
+    ){
+        String updateBase64ProfilePic = AppUtil.toBase64ProfilePic(updateProfilePic);
+        var updateUser = new UserDTO();
+        updateUser.setUserId(id);
+        updateUser.setFirstName(updateFirstName);
+        updateUser.setLastName(updateLastName);
+        updateUser.setPassword(updatePassword);
+        updateUser.setEmail(updateEmail);
+        updateUser.setProfilePic(updateBase64ProfilePic);
+        return userService.updateUser(updateUser)? new ResponseEntity<>(HttpStatus.NO_CONTENT): new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }
 
