@@ -3,6 +3,7 @@ package org.example.notetaker.service.impl;
 import org.example.notetaker.dao.NoteDAO;
 import org.example.notetaker.dto.NoteDTO;
 import org.example.notetaker.entity.NoteEntity;
+import org.example.notetaker.exception.NoteNotFound;
 import org.example.notetaker.service.NoteService;
 import org.example.notetaker.util.AppUtil;
 import org.example.notetaker.util.Mapping;
@@ -31,18 +32,17 @@ public class NoteServiceIMPL implements NoteService {
     }
 
     @Override
-    public boolean updateNote(String noteId, NoteDTO incomeNoteDTO) {
+    public void updateNote(String noteId, NoteDTO incomeNoteDTO) {
         // http://localhost:8080/NoteTaker_war_exploded/api/v1/notes/NOTE-c67069d1-8e79-4d33-919a-f7a02820ac78
         Optional<NoteEntity> tmpNoteEntity= noteDAO.findById(noteId);
         if(!tmpNoteEntity.isPresent()){
-            return false;
+            throw new NoteNotFound("Note not found");
         }else {
             tmpNoteEntity.get().setNoteDesc(incomeNoteDTO.getNoteDesc());
             tmpNoteEntity.get().setNoteTitle(incomeNoteDTO.getNoteTitle());
             tmpNoteEntity.get().setCreateDate(incomeNoteDTO.getCreateDate());
             tmpNoteEntity.get().setPriorityLevel(incomeNoteDTO.getPriorityLevel());
         }
-        return true;
     }
 
     @Override

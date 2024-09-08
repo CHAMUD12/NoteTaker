@@ -1,6 +1,7 @@
 package org.example.notetaker.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.notetaker.exception.NoteNotFound;
 import org.example.notetaker.service.NoteService;
 import org.example.notetaker.dto.NoteDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +52,15 @@ public class NoteController {
     //Todo: UPDATE a note
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping(value = "/{noteId}",produces = MediaType.APPLICATION_JSON_VALUE)  // http://localhost:8080/NoteTaker_war_exploded/api/v1/notes/4f8a0a67-2ebc-41b2-9de6-4e9bcdba65bb
-    public ResponseEntity<String> updateNote(@PathVariable ("noteId") String noteId, @RequestBody NoteDTO note) {
-        return noteService.updateNote(noteId, note) ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<Void> updateNote(@PathVariable ("noteId") String noteId, @RequestBody NoteDTO note) {
+        try {
+            noteService.updateNote(noteId, note);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (NoteNotFound e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     //Todo: DELETE a note
