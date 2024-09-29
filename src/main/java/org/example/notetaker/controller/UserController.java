@@ -28,12 +28,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // add health check
-    @GetMapping("/health")
-    public String checkHealth() {
-        return "User controller is running...";
-    }
-
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> saveUser(
             @RequestPart("firstName") String firstName,

@@ -1,6 +1,7 @@
 package org.example.notetaker.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.notetaker.exception.DataPersistFailedException;
 import org.example.notetaker.exception.NoteNotFound;
 import org.example.notetaker.service.NoteService;
 import org.example.notetaker.dto.NoteDTO;
@@ -19,18 +20,22 @@ public class NoteController {
     @Autowired
     private final NoteService noteService;
 
-    @GetMapping("health")
-    public String healthCheck(){
-        http://localhost:8080/NoteTaker_war_exploded/api/v1/notes/health
-        return "Note Tacker is Running...";
-    }
-
     //Todo: SAVE a note
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)   // http://localhost:8080/NoteTaker_war_exploded/api/v1/notes
-    public ResponseEntity<String> createNote(@RequestBody NoteDTO note){
+    public ResponseEntity<Void> createNote(@RequestBody NoteDTO note){
         //Todo: Handle with BO
-        var saveData = noteService.saveNote(note);
-        return ResponseEntity.ok(saveData);
+        if (note == null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }else {
+            try {
+                noteService.saveNote(note);
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            }catch (DataPersistFailedException e){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }catch (Exception e){
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
     }
 
     //Todo: GetAll a note
