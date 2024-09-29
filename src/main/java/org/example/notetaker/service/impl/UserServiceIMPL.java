@@ -33,7 +33,7 @@ public class UserServiceIMPL implements UserService {
     public void saveUser(UserDTO userDTO) {
         userDTO.setUserId(AppUtil.createUserId());
         UserEntity savedUser = userDAO.save(mapping.convertToUserEntity(userDTO));
-        if(savedUser == null && savedUser.getUserId() == null ) {
+        if(savedUser == null) {
             throw new DataPersistFailedException("Cannot data saved");
         }
     }
