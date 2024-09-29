@@ -1,5 +1,8 @@
+
 package org.example.notetaker.service.impl;
 
+import org.example.notetaker.customObj.NoteErrorResponse;
+import org.example.notetaker.customObj.NoteResponse;
 import org.example.notetaker.dao.NoteDAO;
 import org.example.notetaker.dto.NoteDTO;
 import org.example.notetaker.entity.NoteEntity;
@@ -60,10 +63,13 @@ public class NoteServiceIMPL implements NoteService {
     }
 
     @Override
-    public NoteDTO getSelectedNote(String noteId) {
+    public NoteResponse getSelectedNote(String noteId) {
         // http://localhost:8080/NoteTaker_war_exploded/api/v1/notes/NOTE-b38f55ef-e148-4e4b-8586-a3dcf4d012d3
-        return mapping.convertToDTO(noteDAO.getReferenceById(noteId));
-    }
+        if(noteDAO.existsById(noteId)){
+            return mapping.convertToDTO(noteDAO.getReferenceById(noteId));
+        }else {
+            return new NoteErrorResponse(0,"Note not found");
+        }    }
 
     @Override
     public List<NoteDTO> getAllNotes() {
