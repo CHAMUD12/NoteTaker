@@ -73,7 +73,14 @@ public class NoteController {
     @DeleteMapping(value ="/{noteId}" )
     //  http://localhost:8080/NoteTaker_war_exploded/api/v1/notes/1990119
     //  http://localhost:8080/NoteTaker_war_exploded/api/v1/notes/NOTE 4f8a0a67-2ebc-41b2-9de6-4e9bcdba65bb
-    public ResponseEntity<String> deleteNote(@PathVariable ("noteId") String noteId) {
-        return noteService.deleteNote(noteId) ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Void> deleteNote(@PathVariable ("noteId") String noteId) {
+        try {
+            noteService.deleteNote(noteId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (NoteNotFound e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
